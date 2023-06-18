@@ -34,3 +34,21 @@ sudo systemctl status docker.service
 az login
 az aks install-cli
 az aks get-credentials --resource-group rg-krc-dev-aks01 --name aks-krc-dev-app01
+
+# golang install
+wget https://go.dev/dl/go1.20.5.linux-amd64.tar.gz
+sudo tar -xvf go1.20.5.linux-amd64.tar.gz -C /usr/local
+
+# .profile 수정
+vi ~/.profile
+
+#마지막 부분에 추가
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/go
+export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+
+# 환경 변수 적용 
+. ~/.profile
+
+# 설치 확인
+go version
