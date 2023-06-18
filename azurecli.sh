@@ -58,4 +58,4 @@ kubectl get nodes
 # create rbac for jenkins
 az ad sp create-for-rbac
 $ACR_ID=$(az acr show --resource-group $aksrg --name k8scicdacrtest01 --query "id" --output tsv)
-az role assignment create --assignee 8d1bd7eb-0bd5-4fcd-992c-95bbdd0d7b95 --role Contributor --scope $ACR_ID
+az role assignment create --assignee "appid" --role Contributor --scope $ACR_ID
