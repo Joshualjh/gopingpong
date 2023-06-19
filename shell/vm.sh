@@ -52,3 +52,11 @@ export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
 # 설치 확인
 go version
+
+sudo usermod -aG docker jenkins;
+sudo usermod -aG docker azureuser;
+sudo touch /var/lib/jenkins/jenkins.install.InstallUtil.lastExecVersion;
+sudo service jenkins restart;
+sudo cp -R ~/.kube /var/lib/jenkins/
+sudo chmod 755 /var/lib/jenkins/
+sudo chown -R jenkins:jenkins /var/lib/jenkins
