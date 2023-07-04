@@ -50,8 +50,32 @@ stages:
                 ConnectionType: 'AzureRM'
                 azureSubscription: 'appservicetest'
                 appType: 'webAppContainer'
-                WebAppName: 'backrule4-stage'
+                WebAppName: 'backrule4'
+                deployToSlotOrASE: true
+                slotName: stage
                 DockerNamespace: 'test01'
                 DockerRepository: 'aak1009/pingpong'
                 DockerImageTag: '$(tag)'
 
+- stage: deploy
+  displayName: staging
+  dependsOn: Build
+  jobs:
+  - deployment: Deploy
+    pool:
+      vmImage: 'ubuntu-20.04'
+    environment: dev
+    variables:
+    - group: Release
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: AzureAppServiceManage@0
+            inputs:
+              azureSubscription: 'appservicetest'
+              Action: 'Swap Slots'
+              WebAppName: 'backrule4'
+              ResourceGroupName: 'rg-krc-joshua01'
+              SourceSlot: 'stage'
+              SwapWithProduction: true
