@@ -10,6 +10,8 @@ resources:
 
 variables:
   tag: '$(Build.BuildId)'
+  buildConfiguration: 'Release'
+  releaseBranchName: 'release'
 
 stages:
 - stage: Build
@@ -21,12 +23,12 @@ stages:
       vmImage: ubuntu-latest
     steps:
     - task: Docker@2
-      displayName: Build an image
       inputs:
-        command: build
-        dockerfile: '$(Build.SourcesDirectory)/ping/Dockerfile'
+        containerRegistry: 'test01'
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/ping/Dockerfile'
         tags: |
-          $(tag)
+          aak1009/pingpong:$(tag)
 
 - stage: stage
   displayName: staging
@@ -44,9 +46,13 @@ stages:
           steps:
           - download: current
             artifact: drop
-          - task: AzureWebApp@1
-            displayName: 'Azure App Service Deploy: website'
+          - task: AzureRmWebAppDeployment@4
             inputs:
-              azureSubscription: 'Resource Manager - Tailspin - Space Game'
-              appName: '$(WebAppNameDev)'
-              package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip'
+                ConnectionType: 'AzureRM'
+                azureSubscription: 'appservicetest'
+                appType: 'webAppContainer'
+                WebAppName: 'backrule4-stage'
+                DockerNamespace: 'test01'
+                DockerRepository: 'pingpong'
+                DockerImageTag: '$(tag)'
+
