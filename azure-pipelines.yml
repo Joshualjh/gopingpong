@@ -25,10 +25,11 @@ stages:
     - task: Docker@2
       inputs:
         containerRegistry: 'test01'
+        repository: 'pingpong'
         command: 'buildAndPush'
         Dockerfile: '$(Build.SourcesDirectory)/ping/Dockerfile'
         tags: |
-          aak1009/pingpong:$(tag)
+          $(tag)
 
 - stage: stage
   displayName: staging
