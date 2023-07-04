@@ -47,15 +47,16 @@ stages:
           steps:
           - task: AzureRmWebAppDeployment@4
             inputs:
-                ConnectionType: 'AzureRM'
-                azureSubscription: 'appservicetest'
-                appType: 'webAppContainer'
-                WebAppName: 'backrule4'
-                deployToSlotOrASE: true
-                slotName: stage
-                DockerNamespace: 'test01'
-                DockerRepository: 'aak1009/pingpong'
-                DockerImageTag: '$(tag)'
+              ConnectionType: 'AzureRM'
+              azureSubscription: 'appservicetest'
+              appType: 'webAppContainer'
+              WebAppName: 'backrule4'
+              deployToSlotOrASE: true
+              ResourceGroupName: 'rg-krc-joshua01'
+              SlotName: 'stage'
+              DockerNamespace: 'aak1009'
+              DockerRepository: 'pingpong'
+              DockerImageTag: '$(tag)'
 
 - stage: deploy
   displayName: swap
