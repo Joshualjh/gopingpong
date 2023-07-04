@@ -25,7 +25,7 @@ stages:
     - task: Docker@2
       inputs:
         containerRegistry: 'test01'
-        repository: 'pingpong'
+        repository: 'aak1009/pingpong'
         command: 'buildAndPush'
         Dockerfile: '$(Build.SourcesDirectory)/ping/Dockerfile'
         tags: |
@@ -54,6 +54,6 @@ stages:
                 appType: 'webAppContainer'
                 WebAppName: 'backrule4-stage'
                 DockerNamespace: 'test01'
-                DockerRepository: 'pingpong'
+                DockerRepository: 'aak1009/pingpong'
                 DockerImageTag: '$(tag)'
 
