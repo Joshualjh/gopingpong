@@ -1,18 +1,22 @@
 package main
 
 import (
+	"fmt"
+	"io/ioutil"
 	"net/http"
-
-	"github.com/gin-gonic/gin"
+	"time"
 )
 
 func main() {
-	r := gin.Default()
-	r.GET("/ping", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, gin.H{
-			"message": "change after",
-		})
-	})
-	r.Run(":9000")
+	for true {
+		resp, err := http.Get("http://20.39.196.189:9000/ping")
+		if err != nil {
+			panic(err)
+		}
+
+		data, err := ioutil.ReadAll(resp.Body)
+		fmt.Println(string(data))
+		time.Sleep(1000 * time.Millisecond)
+	}
 
 }
