@@ -58,8 +58,8 @@ stages:
                 DockerImageTag: '$(tag)'
 
 - stage: deploy
-  displayName: staging
-  dependsOn: Build
+  displayName: swap
+  dependsOn: staging
   jobs:
   - deployment: Deploy
     pool:
