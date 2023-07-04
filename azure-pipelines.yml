@@ -59,7 +59,7 @@ stages:
 
 - stage: deploy
   displayName: swap
-  dependsOn: staging
+  dependsOn: stage
   jobs:
   - deployment: Deploy
     pool:
